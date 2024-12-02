@@ -1,44 +1,42 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact, selectContacts } from '../../redux/contactsSlice';
-import { nanoid } from 'nanoid';
+
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import s from './ContactForm.module.css';
 
-const ContactForm = () => {
-  const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-
+const ContactForm = ({ onAddContact }) => {
   const initialValues = { name: '', number: '' };
 
   const validationSchema = Yup.object({
-    name: Yup.string().required('Required'),
-    number: Yup.string().required('Required'),
+    name: Yup.string()
+      .min(3, 'Minimum 3 characters')
+      .max(50, 'Maximum 50 characters')
+      .required('Required'),
+    number: Yup.string()
+      .matches(/^\d{3}-\d{2}-\d{2}$/, 'Format: 123-45-67')
+      .required('Required')
   });
 
   const handleSubmit = (values, { resetForm }) => {
-    const { name, number } = values;
-
-    if (contacts.some(contact => contact.name.toLowerCase() === name.toLowerCase())) {
-      alert(`${name} is already in contacts.`);
-      return;
-    }
-
-    dispatch(addContact({ id: nanoid(), name, number }));
+    onAddContact(values.name, values.number);
     resetForm();
   };
 
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-      <Form>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      <Form className={s.ContactForm}>
         <label>
           Name
           <Field type="text" name="name" />
-          <ErrorMessage name="name" />
+          <ErrorMessage name="name" component="div" className={s.error} />
         </label>
         <label>
           Number
           <Field type="text" name="number" />
-          <ErrorMessage name="number" />
+          <ErrorMessage name="number" component="div" className={s.error} />
         </label>
         <button type="submit">Add Contact</button>
       </Form>
@@ -47,3 +45,4 @@ const ContactForm = () => {
 };
 
 export default ContactForm;
+
