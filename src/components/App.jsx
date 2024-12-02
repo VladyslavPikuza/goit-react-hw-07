@@ -1,4 +1,3 @@
-// src/components/App.js
 import { useDispatch, useSelector } from 'react-redux';
 import ContactForm from './ContactForm/ContactForm';
 import SearchBox from './SearchBox/SearchBox';

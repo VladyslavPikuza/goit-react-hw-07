@@ -1,9 +1,9 @@
 
-import { useDispatch } from 'react-redux';
 import Contact from '../Contact/Contact';
 import s from './ContactList.module.css';
 
 const ContactList = ({ contacts, onDeleteContact }) => {
+  
   return (
     <ul className={s.ContactList}>
       {contacts.map(contact => (
