@@ -4,7 +4,7 @@ import s from "./SearchBox.module.css";
 
 const SearchBox = () => {
   const dispatch = useDispatch();
-  const filter = useSelector((state) => state.filters.name);
+  const filter = useSelector((state) => state.filters?.name || '');
 
   const handleChange = (e) => {
     dispatch(changeFilter(e.target.value));
@@ -12,12 +12,10 @@ const SearchBox = () => {
 
   return (
     <div className={s.SearchBox}>
-    <label>
-      Find contacts by name:
-      <input type="text" value={filter} onChange={handleChange} />
+      <label>
+        Find contacts by name:
+        <input type="text" value={filter} onChange={handleChange} />
       </label>
-      </div>
+    </div>
   );
 };
-
-export default SearchBox;
