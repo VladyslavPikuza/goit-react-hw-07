@@ -43,13 +43,11 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(addContact.fulfilled, (state, action) => {
-  console.log('Added contact to state:', action.payload); 
-  state.items.push(action.payload);
+      .addCase(addContact.fulfilled, (state, action) => { state.items.push(action.payload);
 })
 
       .addCase(deleteContact.fulfilled, (state, action) => {
-        state.items = state.items.filter((item) => item.id !== action.payload);
+        state.items = state.items.filter((contact) => contact.id !== action.payload);
       });
   },
 });
