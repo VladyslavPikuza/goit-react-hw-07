@@ -44,8 +44,10 @@ const contactsSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(addContact.fulfilled, (state, action) => {
-        state.items.push(action.payload);
-      })
+  console.log('Added contact to state:', action.payload); 
+  state.items.push(action.payload);
+})
+
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item.id !== action.payload);
       });
